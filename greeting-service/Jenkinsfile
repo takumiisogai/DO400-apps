@@ -1,26 +1,51 @@
-pipeline{
-    agent{
-        label "nodejs"
-    }
-    stages{
-        stage("Install dependencies"){
-            steps{
-                sh "npm ci"
-            }
-        }
+//pipeline{
+  //  agent{
+    //    label "nodejs"
+    //}
+    //stages{
+      //  stage("Install dependencies"){
+        //    steps{
+          //      sh "npm ci"
+            //}
+        //}
 
-        stage("Check Style"){
-            steps{
-                sh "npm run lint"
-            }
-        }
+        //stage("Check Style"){
+          //  steps{
+            //    sh "npm run lint"
+            //}
+        //}
 
-        stage("Test"){
-            steps{
-                sh "npm test"
-            }
-        }
+       // stage("Test"){
+         //   steps{
+         //       sh "npm test"
+          //  }
+       // }
 
         // Add the "Deploy" stage here
-    }
+  //  }
+//}
+pipeline{
+
+agent any
+
+stages{
+
+stage('Deploy') {
+
+steps {
+
+sh '''
+
+oc project yqaphi-deploy-strategies
+
+oc start-build greeting-service --follow --wait
+
+'''
+
+}
+
+}
+
+}
+
 }
